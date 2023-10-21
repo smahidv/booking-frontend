@@ -53,18 +53,25 @@ const Reserve = ({ setOpen, hotelId }) => {
 
   const handleClick = async () => {
     try {
-      await Promise.all(
-        selectedRooms?.map((roomId) => {
-          const res = axios.put(`/rooms/availability/${roomId}`, {
-            dates: alldates,
-          });
-          return res.data;
-        })
-      );
-      setOpen(false);
-      navigate("/");
-    } catch (err) {}
+      if (Array.isArray(selectedRooms)) {
+        await Promise.all(
+          selectedRooms.map((roomId) => {
+            const res = axios.put(`/rooms/availability/${roomId}`, {
+              dates: alldates,
+            });
+            return res.data;
+          })
+        );
+        setOpen(false);
+        navigate("/");
+      } else {
+        console.error("selectedRooms is not an array");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
   return (
     <div className="reserve">
       <div className="rContainer">
