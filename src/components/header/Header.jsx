@@ -88,7 +88,7 @@ const Header = ({ type }) => {
                       label="Age"
                       onChange={handleChange}
                     >
-                      {data.map((city, index) => (
+                      {data?.map((city, index) => (
                         <MenuItem value={city} key={index}>
                           {city}
                         </MenuItem>
