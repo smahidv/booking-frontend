@@ -23,7 +23,12 @@ import Select from "@mui/material/Select";
 // import {AuthContext} from "../../context/AuthContext";
 
 const Header = ({ type }) => {
-  const { data, loading, error } = useFetch(`/hotels/cities`);
+   const baseUrl = process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_API_BASE_URL
+    : process.env.REACT_APP_PROD_API_BASE_URL;
+
+  const { data, loading, error, reFetch } = useFetch(baseUrl, 'hotels/cities');
+  
   const [destination, setDestination] = useState("");
   const handleChange = (event) => {
     setDestination(event.target.value);

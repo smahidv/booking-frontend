@@ -22,7 +22,16 @@ const Hotel = () => {
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error } = useFetch(`/hotels/find/${id}`);
+  // Import the environment variables
+  const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_API_BASE_URL
+    : process.env.REACT_APP_PROD_API_BASE_URL;
+
+const url =  "hotels/find/" + id;
+
+const { data, loading, error } = useFetch(baseUrl ,url);
+
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
  
@@ -120,7 +129,8 @@ const Hotel = () => {
               free airport taxi
             </span>
             <div className="hotelImages">
-              {data.photos?.map((photo, i) => (
+            {Array.isArray(data.photos) &&
+              data.photos?.map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
                   <img
                     onClick={() => handleOpen(i)}

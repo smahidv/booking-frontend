@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const useFetch = (url) => {
+const useFetch = (baseUrl, endpoint) => { // Accept `baseUrl` as a prop
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -10,7 +10,7 @@ const useFetch = (url) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(url);
+        const res = await axios.get(`${baseUrl}/${endpoint}`); // Use baseUrl in the URL
         setData(res.data);
       } catch (err) {
         setError(err);
@@ -18,12 +18,12 @@ const useFetch = (url) => {
       setLoading(false);
     };
     fetchData();
-  }, [url]);
+  }, [baseUrl, endpoint]); // Include baseUrl and endpoint in the dependencies array
 
   const reFetch = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(url);
+      const res = await axios.get(`${baseUrl}/${endpoint}`); // Use baseUrl in the URL
       setData(res.data);
     } catch (err) {
       setError(err);

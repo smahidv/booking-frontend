@@ -17,9 +17,15 @@ const List = () => {
   const [min, setMin] = useState(undefined);
   const [max, setMax] = useState(undefined);
 
-  const { data, loading, error, reFetch } = useFetch(
-    `/hotels?city=${destination}&min=${min || 0 }&max=${max || 999}`
-  );
+  const baseUrl =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_API_BASE_URL
+    : process.env.REACT_APP_PROD_API_BASE_URL;
+
+const url = "hotels?city=" + destination + "&min=" + (min || 0) + "&max=" + (max || 999);
+
+const { data, loading, error, reFetch } = useFetch(baseUrl,url);
+
 
   const handleClick = () => {
     reFetch();
@@ -34,7 +40,7 @@ const List = () => {
           <div className="listSearch">
             <div className="lsItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" disabled/>
+              <input placeholder={destination} type="text" disabled />
             </div>
             <div className="lsItem">
               <label>Check-in Date</label>
@@ -109,10 +115,8 @@ const List = () => {
               "loading"
             ) : (
               <>
-              {Array.isArray(data) &&
-                data.map((item) => (
-                  <SearchItem item={item} key={item._id} />
-                ))}
+                {Array.isArray(data) &&
+                  data.map((item) => <SearchItem item={item} key={item._id} />)}
               </>
             )}
           </div>
