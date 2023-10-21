@@ -1,0 +1,22 @@
+.header-container{
+  position: relative;
+  background-image:url('../../images/kara-eads-L7EwHkq1B2s-unsplash.jpg') ;
+  background-origin: border-box;
+background-repeat: no-repeat;
+background-size: cover;
+min-height: 100vh;
+width: 100vw !important;
+ 
+}
+.homeContainer{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.homeTitle{
+
+  font-size: 20px;
+}
